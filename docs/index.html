@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반짝 크리스마스 트리 · 내 바탕화면의 작은 트리</title>
+<meta name="description" content="눈이 내리고, 트리가 반짝이고, 선물이 생기는 바탕화면 크리스마스 트리. 무료 · 설치 없는 포터블 exe. 놀이터에서 바로 즐겨보세요!">
+<meta property="og:title" content="🎄 반짝 크리스마스 트리">
+<meta property="og:description" content="바탕화면에 작은 크리스마스 트리를 놓아보세요. 선물은 시간이 지나면 생기고, 톡 누르면 열려요!">
+<meta property="og:image" content="preview.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎄</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gamja+Flower&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #14213d; --night2: #1f3160; --red: #e63946; --red2: #c1121f; --green: #2a9d68; --green2: #1b6b47;
+    --gold: #ffd166; --cream: #fff8e7; --pink: #ff9eb5; --ink: #3b2a2a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: "Jua", "Malgun Gothic", sans-serif; color: var(--cream);
+    background: linear-gradient(180deg, #0f1a33 0%, #1a2b57 45%, #28407a 100%); background-attachment: fixed;
+    overflow-x: hidden; line-height: 1.6;
+  }
+  #snow { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+  section { padding: 64px 0 24px; }
+  h2 { font-size: clamp(28px, 5vw, 42px); margin: 0 0 8px; text-align: center; text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+  .sub { text-align: center; font-family: "Gamja Flower", sans-serif; font-size: 22px; opacity: .9; margin: 0 0 28px; }
+
+  /* 상단 */
+  nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(8px); background: rgba(15,26,51,.7); border-bottom: 2px dashed rgba(255,209,102,.35); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 54px; }
+  nav b { font-size: 20px; }
+  nav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+  nav a.l { text-decoration: none; padding: 4px 11px; border-radius: 99px; font-size: 15px; }
+  nav a.l:hover { background: rgba(255,255,255,.15); }
+  @media (max-width: 720px) { nav .links a.l:not(.dl) { display: none; } }
+  .dl { background: var(--red); color: #fff; }
+  .dl:hover { background: var(--red2) !important; }
+
+  /* 히어로 */
+  .hero { text-align: center; padding: 56px 0 30px; position: relative; }
+  .hero h1 { font-size: clamp(38px, 8vw, 78px); margin: 6px 0; line-height: 1.12; text-shadow: 0 5px 0 rgba(0,0,0,.28), 0 0 30px rgba(255,209,102,.35); }
+  .hero h1 span { color: var(--gold); display: inline-block; animation: bob 2.4s ease-in-out infinite; }
+  .hero h1 span:nth-child(2) { animation-delay: .3s; color: #ff7b8a; }
+  .hero h1 span:nth-child(3) { animation-delay: .6s; color: #7be0a8; }
+  .hero p.lead { font-family: "Gamja Flower", sans-serif; font-size: clamp(21px, 3.4vw, 30px); max-width: 640px; margin: 8px auto 26px; }
+  @keyframes bob { 50% { transform: translateY(-9px) rotate(-3deg); } }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 16px 30px; border-radius: 99px; text-decoration: none; cursor: pointer;
+    font: inherit; font-size: 24px; border: 0; color: #fff; background: linear-gradient(180deg, #ff5a68, var(--red2));
+    box-shadow: 0 6px 0 #8a0e18, 0 12px 24px rgba(0,0,0,.35); transition: transform .12s;
+  }
+  .btn:hover { transform: translateY(-3px) rotate(-1deg); }
+  .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #8a0e18; }
+  .btn.green { background: linear-gradient(180deg, #46c98a, var(--green2)); box-shadow: 0 6px 0 #124a31, 0 12px 24px rgba(0,0,0,.35); }
+  .btn.small { font-size: 17px; padding: 9px 18px; box-shadow: 0 4px 0 #8a0e18; }
+  .meta { margin-top: 14px; font-family: "Gamja Flower", sans-serif; font-size: 19px; opacity: .85; }
+  .heroimg { position: relative; margin: 34px auto 0; width: min(360px, 82%); }
+  .heroimg .card {
+    background: linear-gradient(180deg, #e9f2ff, #cfe0ff); border-radius: 30px; padding: 10px; border: 5px solid #fff;
+    box-shadow: 0 16px 40px rgba(0,0,0,.45); transform: rotate(-2.5deg);
+  }
+  .heroimg img { width: 100%; display: block; border-radius: 20px; }
+  .heroimg .tag { position: absolute; font-size: 26px; animation: bob 3s ease-in-out infinite; }
+  .heroimg .t1 { left: -26px; top: 20px; } .heroimg .t2 { right: -22px; top: 70px; animation-delay: .5s; } .heroimg .t3 { left: -16px; bottom: 40px; animation-delay: 1s; }
+  .sticker { position: absolute; right: -18px; bottom: -14px; background: var(--gold); color: var(--ink); border-radius: 50%; width: 92px; height: 92px; display: grid; place-items: center; text-align: center; font-size: 16px; line-height: 1.15; transform: rotate(12deg); box-shadow: 0 6px 14px rgba(0,0,0,.4); border: 3px dashed #fff; }
+
+  /* 특징 */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+  .feat { background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.2); border-radius: 26px; padding: 20px 18px; text-align: center; transition: transform .2s; }
+  .feat:hover { transform: translateY(-6px) rotate(-1deg); background: rgba(255,255,255,.16); }
+  .feat .e { font-size: 46px; display: block; }
+  .feat h3 { margin: 6px 0 4px; font-size: 22px; color: var(--gold); }
+  .feat p { margin: 0; font-family: "Gamja Flower", sans-serif; font-size: 19px; line-height: 1.35; }
+
+  /* 놀이터 카드 */
+  .play { background: var(--cream); color: var(--ink); border-radius: 34px; padding: 26px 22px 28px; margin: 26px 0; border: 6px solid #fff; position: relative; box-shadow: 0 10px 0 rgba(0,0,0,.2), 0 18px 40px rgba(0,0,0,.35); }
+  .play::before { content: ""; position: absolute; left: 22px; right: 22px; top: -6px; height: 12px; border-radius: 12px; background: repeating-linear-gradient(45deg, var(--red) 0 14px, #fff 14px 28px); }
+  .play h3 { margin: 6px 0 2px; font-size: 30px; color: var(--red2); text-align: center; }
+  .play .hint { text-align: center; font-family: "Gamja Flower", sans-serif; font-size: 20px; margin: 0 0 16px; color: #6b4a4a; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 10px 0; }
+  .chip { font: inherit; font-size: 28px; width: 56px; height: 56px; border-radius: 18px; border: 3px solid #f0d9b5; background: #fff; cursor: pointer; transition: transform .1s; }
+  .chip:hover { transform: scale(1.12) rotate(-5deg); }
+  .chip.on { border-color: var(--red); background: #ffe3e6; transform: scale(1.12); }
+  .pill { font: inherit; font-size: 17px; padding: 8px 16px; border-radius: 99px; border: 3px solid var(--green2); background: #fff; color: var(--green2); cursor: pointer; }
+  .pill:hover { background: #e4fff1; }
+
+  /* 트리 꾸미기 */
+  #deco { position: relative; width: min(340px, 100%); aspect-ratio: 300 / 360; margin: 0 auto; background: linear-gradient(180deg, #1b2d5a, #2d4a8a); border-radius: 26px; overflow: hidden; touch-action: manipulation; cursor: crosshair; border: 4px solid #fff; }
+  #deco svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #deco .it { position: absolute; transform: translate(-50%, -50%); font-size: 24px; pointer-events: none; animation: pop .35s cubic-bezier(.3, 1.8, .5, 1); filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+  @keyframes pop { from { transform: translate(-50%, -50%) scale(0); } }
+  .lights .bulb { animation: tw 1.4s ease-in-out infinite; }
+  .off .bulb { animation: none; opacity: .25; }
+  @keyframes tw { 50% { opacity: .25; } }
+
+  /* 눈송이 잡기 */
+  #catch { position: relative; height: 340px; border-radius: 26px; overflow: hidden; background: linear-gradient(180deg, #25407a, #5f86c9 70%, #e8f2ff 71%); border: 4px solid #fff; touch-action: manipulation; user-select: none; }
+  #catch .fall { position: absolute; font-size: 38px; cursor: pointer; will-change: transform; line-height: 1; }
+  #catch .hud { position: absolute; left: 12px; top: 8px; right: 12px; display: flex; justify-content: space-between; font-size: 22px; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); pointer-events: none; z-index: 3; }
+  #catch .over { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; background: rgba(15,26,51,.55); color: #fff; z-index: 4; font-size: 26px; }
+  .pts { position: absolute; font-size: 24px; color: #fff; text-shadow: 0 2px 0 #c1121f; pointer-events: none; animation: up .8s ease-out forwards; z-index: 3; }
+  @keyframes up { to { transform: translateY(-46px); opacity: 0; } }
+
+  /* 선물 */
+  .gifts { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .gift { width: 112px; height: 112px; cursor: pointer; position: relative; font-size: 78px; text-align: center; line-height: 112px; background: none; border: 0; transition: transform .15s; }
+  .gift:hover { animation: shake .5s; }
+  @keyframes shake { 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
+  #giftMsg { min-height: 74px; text-align: center; font-family: "Gamja Flower", sans-serif; font-size: 25px; color: var(--ink); margin: 10px auto 0; max-width: 520px; background: #fff; border-radius: 20px; padding: 12px 18px; border: 3px dashed #f0b6bd; }
+
+  /* 오르골 */
+  .keys { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .key { width: 62px; height: 112px; border-radius: 14px 14px 22px 22px; border: 3px solid #fff; color: #fff; font: inherit; font-size: 20px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; box-shadow: 0 6px 0 rgba(0,0,0,.25); transition: transform .06s; }
+  .key:active, .key.hit { transform: translateY(5px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+
+  /* 카운트다운 */
+  .count { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .count div { background: #fff; border-radius: 20px; padding: 10px 6px; min-width: 78px; text-align: center; border: 3px solid var(--red); }
+  .count b { display: block; font-size: 38px; color: var(--red2); line-height: 1.1; }
+  .count small { font-size: 15px; color: #6b4a4a; }
+  .road { position: relative; height: 56px; margin: 18px 6px 0; border-bottom: 6px dotted #b9d3ff; }
+  .road .s { position: absolute; bottom: -8px; font-size: 40px; transition: left 1s; transform: translateX(-50%) scaleX(-1); }
+  .road .h { position: absolute; right: -4px; bottom: -6px; font-size: 38px; }
+
+  /* 소원 */
+  #wishSky { position: relative; height: 230px; border-radius: 26px; overflow: hidden; background: radial-gradient(ellipse at 50% 120%, #4a63b8, #1a2755 70%); border: 4px solid #fff; margin-top: 12px; }
+  .wstar { position: absolute; font-size: 22px; animation: tw 2.4s ease-in-out infinite; cursor: default; }
+  .wstar span { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 13px; white-space: nowrap; color: #ffeab0; opacity: 0; transition: opacity .2s; font-family: "Gamja Flower"; }
+  .wstar:hover span { opacity: 1; }
+  .wform { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .wform input { font: inherit; font-size: 18px; padding: 10px 16px; border-radius: 99px; border: 3px solid #f0d9b5; width: min(340px, 100%); outline: none; }
+  .wform input:focus { border-color: var(--red); }
+
+  /* 링크 */
+  .links3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .ext { display: block; text-decoration: none; background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.22); border-radius: 24px; padding: 18px; transition: transform .2s; }
+  .ext:hover { transform: translateY(-5px) rotate(1deg); background: rgba(255,255,255,.18); }
+  .ext b { font-size: 21px; color: var(--gold); display: block; }
+  .ext span { font-family: "Gamja Flower", sans-serif; font-size: 19px; line-height: 1.3; display: block; margin-top: 3px; }
+
+  /* FAQ */
+  details { background: rgba(255,255,255,.1); border-radius: 18px; padding: 12px 18px; margin: 10px 0; border: 2px solid rgba(255,255,255,.18); }
+  summary { cursor: pointer; font-size: 20px; }
+  details p { margin: 8px 0 2px; font-family: "Gamja Flower", sans-serif; font-size: 20px; }
+
+  .cta { text-align: center; padding: 70px 0 30px; }
+  footer { text-align: center; padding: 20px 0 50px; font-family: "Gamja Flower", sans-serif; font-size: 18px; opacity: .8; position: relative; z-index: 2; }
+  .santa-fly { position: fixed; top: 96px; left: -140px; font-size: 52px; z-index: 45; pointer-events: none; animation: fly 14s linear infinite; animation-delay: 3s; white-space: nowrap; }
+  @keyframes fly { from { transform: translateX(0) translateY(0); } 50% { transform: translateX(60vw) translateY(24px); } to { transform: translateX(calc(100vw + 200px)) translateY(-6px); } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .santa-fly { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="santa-fly" aria-hidden="true">🦌🦌🛷🎅</div>
+
+<nav>
+  <div class="wrap">
+    <b>🎄 반짝 트리</b>
+    <div class="links">
+      <a class="l" href="#features">특징</a>
+      <a class="l" href="#playground">놀이터</a>
+      <a class="l" href="#more">더 놀기</a>
+      <a class="l dl" href="https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.0/ChristmasTree-portable.exe">🎁 다운로드</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <div style="font-size:34px">⭐ 🎅 ⭐</div>
+    <h1><span>반짝</span> <span>크리스마스</span> <span>트리</span></h1>
+    <p class="lead">내 바탕화면에 쏙! 눈이 내리고, 트리가 반짝이고,<br>선물은 시간이 지나면 짠~ 하고 생겨요 🎁</p>
+    <a class="btn" id="dlMain" href="https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.0/ChristmasTree-portable.exe">🎁 무료로 받기 (Windows)</a>
+    <div class="meta">v1.0.0 · 설치 없이 더블클릭 · 약 105MB · 광고 없음 · 무료</div>
+    <div class="heroimg">
+      <div class="card"><img src="preview.png" alt="바탕화면에 놓인 작은 크리스마스 트리와 선물"></div>
+      <span class="tag t1">✨</span><span class="tag t2">🔔</span><span class="tag t3">❄️</span>
+      <div class="sticker">진짜<br>작아요<br>🎄</div>
+    </div>
+  </header>
+
+  <section id="features">
+    <h2>☃️ 이런 걸 해요</h2>
+    <p class="sub">작은 트리 하나가 바탕화면에서 이렇게 놀아요</p>
+    <div class="grid">
+      <div class="feat"><span class="e">❄️</span><h3>펑펑 눈이 와요</h3><p>마우스를 휙 하면 눈송이가 바람에 날려요</p></div>
+      <div class="feat"><span class="e">✨</span><h3>반짝반짝 전구</h3><p>알록달록 전구가 제멋대로 깜빡깜빡</p></div>
+      <div class="feat"><span class="e">🎁</span><h3>선물이 생겨요</h3><p>2분마다 하늘에서 쿵! 눌러서 열어보세요</p></div>
+      <div class="feat"><span class="e">🧦</span><h3>장식을 모아요</h3><p>선물에서 나온 양말·눈사람·쿠키가 트리에 걸려요</p></div>
+      <div class="feat"><span class="e">🌟</span><h3>소원 별 달기</h3><p>소원을 적으면 반짝이는 별이 되어 걸려요</p></div>
+      <div class="feat"><span class="e">🛷</span><h3>산타 할아버지</h3><p>가끔 썰매가 슝~ 지나가며 선물을 두고 가요</p></div>
+      <div class="feat"><span class="e">🎶</span><h3>오르골 소리</h3><p>고요한 밤, 징글벨… 포근한 오르골 BGM</p></div>
+      <div class="feat"><span class="e">📅</span><h3>D-Day 알림</h3><p>크리스마스까지 며칠 남았는지 알려줘요</p></div>
+    </div>
+  </section>
+
+  <section id="playground">
+    <h2>🎪 크리스마스 놀이터</h2>
+    <p class="sub">앱을 받기 전에, 여기서 먼저 놀아봐요!</p>
+
+    <div class="play" id="g-count">
+      <h3>🎅 크리스마스까지 얼마나 남았을까?</h3>
+      <p class="hint">산타 할아버지가 집에 도착하기까지!</p>
+      <div class="count" id="count"></div>
+      <div class="road"><span class="s" id="sleigh">🛷</span><span class="h">🏠</span></div>
+    </div>
+
+    <div class="play">
+      <h3>🎄 내 마음대로 트리 꾸미기</h3>
+      <p class="hint">아래에서 장식을 고르고, 트리를 톡톡 눌러보세요!</p>
+      <div class="row" id="palette"></div>
+      <div id="deco" class="lights">
+        <svg viewBox="0 0 300 360" aria-hidden="true">
+          <defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fbf7a"/><stop offset="1" stop-color="#1b6b47"/></linearGradient></defs>
+          <rect x="132" y="296" width="36" height="46" rx="5" fill="#7a4b27"/>
+          <path d="M150 128 L250 232 Q150 248 50 232 Z" fill="url(#tg)" transform="translate(0,78)"/>
+          <path d="M150 70 L238 178 Q150 192 62 178 Z" fill="url(#tg)" transform="translate(0,20)"/>
+          <path d="M150 24 L214 112 Q150 124 86 112 Z" fill="url(#tg)"/>
+          <ellipse cx="150" cy="344" rx="130" ry="14" fill="#eaf3ff"/>
+          <g class="bulbs"></g>
+          <text x="150" y="30" font-size="34" text-anchor="middle" class="bulb">⭐</text>
+        </svg>
+      </div>
+      <div class="row">
+        <button class="pill" id="lightsBtn">💡 전구 껐다 켰다</button>
+        <button class="pill" id="undoBtn">↩️ 하나 지우기</button>
+        <button class="pill" id="clearBtn">🧹 싹 지우기</button>
+      </div>
+    </div>
+
+    <div class="play">
+      <h3>❄️ 눈송이·선물 잡기!</h3>
+      <p class="hint">30초 동안 ❄️🎁⭐를 톡! 하지만 🪨석탄은 조심!</p>
+      <div id="catch"><div class="hud"><span>⏱ <b id="cTime">30</b></span><span>⭐ <b id="cScore">0</b> <small>(최고 <span id="cBest">0</span>)</small></span></div>
+        <div class="over" id="cOver"><div>🎮 시작하기<br><small style="font-size:18px">눌러서 시작!</small></div></div></div>
+    </div>
+
+    <div class="play">
+      <h3>🎁 오늘의 선물 열기</h3>
+      <p class="hint">마음에 드는 선물 하나를 골라보세요</p>
+      <div class="gifts" id="gifts"></div>
+      <div id="giftMsg">선물 상자를 눌러보세요 👆</div>
+    </div>
+
+    <div class="play">
+      <h3>🔔 오르골 피아노</h3>
+      <p class="hint">건반을 누르거나 키보드 <b>A S D F G H J K</b> 를 눌러보세요</p>
+      <div class="keys" id="keys"></div>
+      <div class="row"><button class="pill" id="jingle">🎵 징글벨 들려주기</button></div>
+    </div>
+
+    <div class="play">
+      <h3>🌟 소원 별 날리기</h3>
+      <p class="hint">소원을 적으면 하늘의 별이 돼요. 별에 마우스를 올려보세요!</p>
+      <form class="wform" id="wishForm"><input id="wishIn" maxlength="24" placeholder="올해 소원은 뭐예요?" autocomplete="off"><button class="pill" type="submit">⭐ 날리기</button></form>
+      <div id="wishSky"></div>
+    </div>
+  </section>
+
+  <section id="more">
+    <h2>🧭 더 즐길 수 있는 곳</h2>
+    <p class="sub">크리스마스를 온라인에서 즐기는 인기 사이트들 (인터넷에서 찾아봤어요!)</p>
+    <div class="links3">
+      <a class="ext" target="_blank" rel="noopener" href="https://santatracker.google.com/"><b>🎮 Google Santa Tracker</b><span>산타 마을에서 엘프 만들기, 코딩 게임, 눈싸움 등 무료 게임이 가득해요</span></a>
+      <a class="ext" target="_blank" rel="noopener" href="https://www.noradsanta.org/"><b>🛰️ NORAD 산타 추적</b><span>12월에는 게임과 카운트다운, 크리스마스 이브에는 산타 위치를 따라가요</span></a>
+      <a class="ext" target="_blank" rel="noopener" href="https://www.portablenorthpole.com/"><b>🦌 Portable North Pole</b><span>북극 마을 트리 꾸미기, 내 루돌프 이름 찾기 같은 놀이가 있어요</span></a>
+      <a class="ext" target="_blank" rel="noopener" href="https://www.northpole.com/"><b>🏔️ Northpole.com</b><span>게임, 만들기, 엘프 동화, 레시피, 겨울 풍경 꾸미기까지!</span></a>
+    </div>
+    <p class="sub" style="margin-top:14px;font-size:17px">※ 외부 사이트는 우리와 관계없는 곳이에요. 아이와 함께 보호자와 같이 즐겨요 👪</p>
+  </section>
+
+  <section>
+    <h2>🙋 궁금해요</h2>
+    <details><summary>돈이 드나요?</summary><p>아니요, 완전 무료예요. 광고도 없어요.</p></details>
+    <details><summary>설치해야 하나요?</summary><p>설치 없이 파일을 더블클릭하면 바로 나와요. 지우고 싶으면 파일만 삭제하면 돼요.</p></details>
+    <details><summary>실행할 때 파란 경고창이 떠요!</summary><p>아직 인증서가 없는 개인 앱이라 Windows SmartScreen이 물어볼 수 있어요. "추가 정보 → 실행"을 누르면 돼요. 소스 코드는 GitHub에 모두 공개되어 있어요.</p></details>
+    <details><summary>어떻게 끄나요? 옮기려면요?</summary><p>트리를 마우스로 끌어서 옮기고, 우클릭하면 메뉴가 나와요. 크기·소리·소원 달기·종료가 모두 거기 있어요.</p></details>
+    <details><summary>Mac이나 휴대폰도 되나요?</summary><p>지금은 Windows만 지원해요. 대신 위의 놀이터는 휴대폰에서도 놀 수 있어요!</p></details>
+  </section>
+
+  <div class="cta">
+    <div style="font-size:56px">🎄🎁🎅</div>
+    <h2>내 바탕화면에도 트리를 놓아볼까요?</h2>
+    <p class="sub">메리 크리스마스!</p>
+    <a class="btn green" href="https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.0/ChristmasTree-portable.exe">🎁 지금 받기 v1.0.0</a>
+    <div class="meta"><a href="https://github.com/cybereun/christmas-tree-desktop/releases">모든 버전 보기</a> · <a href="https://github.com/cybereun/christmas-tree-desktop">소스 코드</a></div>
+  </div>
+</main>
+
+<footer>Made with ❄️ and ❤️ · 반짝 크리스마스 트리 v1.0.0</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 배경 눈 ----
+  const cv = $('#snow'), cx = cv.getContext('2d');
+  let flakes = [];
+  function size() { cv.width = innerWidth; cv.height = innerHeight; }
+  size(); addEventListener('resize', size);
+  for (let i = 0; i < (reduce ? 0 : 90); i++) flakes.push({ x: rnd(0, innerWidth), y: rnd(0, innerHeight), r: rnd(1.2, 4), v: rnd(20, 60), p: rnd(0, 6) });
+  let lt = performance.now();
+  (function loop(t) {
+    const dt = Math.min(0.05, (t - lt) / 1000); lt = t;
+    cx.clearRect(0, 0, cv.width, cv.height);
+    cx.fillStyle = 'rgba(255,255,255,.85)';
+    for (const f of flakes) {
+      f.y += f.v * dt; f.x += Math.sin(t / 1000 + f.p) * 14 * dt;
+      if (f.y > cv.height + 6) { f.y = -6; f.x = rnd(0, cv.width); }
+      cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 7); cx.fill();
+    }
+    requestAnimationFrame(loop);
+  })(lt);
+
+  // ---- 소리 ----
+  let ac;
+  function tone(f, dur = 1.3, vol = 0.28) {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      ac.resume();
+      const t0 = ac.currentTime, g = ac.createGain(), o = ac.createOscillator(), o2 = ac.createOscillator(), g2 = ac.createGain();
+      o.frequency.value = f; o2.frequency.value = f * 4.02; g2.gain.value = 0.18;
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); o2.connect(g2); g2.connect(g); g.connect(ac.destination);
+      o.start(t0); o2.start(t0); o.stop(t0 + dur + 0.05); o2.stop(t0 + dur + 0.05);
+    } catch (e) { /* 소리 없이 계속 */ }
+  }
+
+  // ---- 카운트다운 ----
+  const cEl = $('#count'), sleigh = $('#sleigh');
+  function tick() {
+    const now = new Date();
+    let x = new Date(now.getFullYear(), 11, 25);
+    if (now > new Date(now.getFullYear(), 11, 26)) x = new Date(now.getFullYear() + 1, 11, 25);
+    let diff = x - now;
+    if (diff < 0) { cEl.innerHTML = '<div style="min-width:240px"><b>🎄</b><small>메리 크리스마스!</small></div>'; sleigh.style.left = '98%'; return; }
+    const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+    cEl.innerHTML = [[d, '일'], [h, '시간'], [m, '분'], [s, '초']].map(([v, l]) => `<div><b>${v}</b><small>${l}</small></div>`).join('');
+    sleigh.style.left = Math.max(3, Math.min(97, 100 - (d / 60) * 100)) + '%';
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ---- 트리 꾸미기 ----
+  const EMO = ['⭐', '🔔', '🍬', '🧦', '🎁', '⛄', '🍪', '❤️', '🔴', '🦌', '🕯️', '👼'];
+  let cur = EMO[0];
+  const pal = $('#palette'), deco = $('#deco');
+  EMO.forEach((e, i) => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (i ? '' : ' on'); b.textContent = e; b.setAttribute('aria-label', e);
+    b.onclick = () => { cur = e; [...pal.children].forEach((c) => c.classList.toggle('on', c === b)); };
+    pal.appendChild(b);
+  });
+  // 전구
+  const bulbG = $('.bulbs', deco), cols = ['#ffd166', '#ff6b6b', '#7ad7ff', '#9dff9d', '#ff9de6'];
+  [[150, 70], [130, 100], [172, 100], [110, 150], [150, 140], [190, 150], [92, 205], [135, 195], [170, 215], [210, 205], [80, 268], [120, 262], [160, 270], [205, 262], [240, 270]].forEach(([x, y], i) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 4.5); c.setAttribute('fill', cols[i % 5]); c.setAttribute('class', 'bulb');
+    c.style.animationDelay = (i * 0.17) + 's'; c.style.filter = `drop-shadow(0 0 5px ${cols[i % 5]})`;
+    bulbG.appendChild(c);
+  });
+  const placed = [];
+  try { JSON.parse(localStorage.getItem('xmas.site') || '[]').forEach((p) => addIt(p.x, p.y, p.e, true)); } catch (e) { /* 저장 없음 */ }
+  function addIt(px, py, e, quiet) {
+    const el = document.createElement('div'); el.className = 'it'; el.textContent = e;
+    el.style.left = px + '%'; el.style.top = py + '%'; deco.appendChild(el); placed.push({ x: px, y: py, e, el });
+    if (!quiet) { tone(pick([523, 587, 659, 784, 880, 1047]), 1.1, 0.2); persist(); }
+  }
+  function persist() { try { localStorage.setItem('xmas.site', JSON.stringify(placed.map(({ x, y, e }) => ({ x, y, e })))); } catch (e) { /* ignore */ } }
+  deco.addEventListener('click', (ev) => {
+    const r = deco.getBoundingClientRect();
+    const px = (ev.clientX - r.left) / r.width * 100, py = (ev.clientY - r.top) / r.height * 100;
+    // 트리 삼각형 안쪽만
+    const yy = py / 100 * 360, xx = px / 100 * 300;
+    if (yy < 24 || yy > 322) return;
+    const hw = 70 + (yy - 24) / 298 * 66; // 대략적인 반폭
+    if (Math.abs(xx - 150) > hw) return;
+    if (placed.length >= 60) return;
+    addIt(px, py, cur);
+  });
+  $('#lightsBtn').onclick = () => deco.classList.toggle('off');
+  $('#undoBtn').onclick = () => { const p = placed.pop(); if (p) { p.el.remove(); persist(); } };
+  $('#clearBtn').onclick = () => { placed.splice(0).forEach((p) => p.el.remove()); persist(); };
+
+  // ---- 눈송이 잡기 ----
+  const area = $('#catch'), over = $('#cOver'), sT = $('#cTime'), sS = $('#cScore'), sB = $('#cBest');
+  let best = 0; try { best = +localStorage.getItem('xmas.best') || 0; } catch (e) { /* */ }
+  sB.textContent = best;
+  let running = false, score = 0, left = 30, items = [], gLoop, gTimer, spawnT;
+  const KINDS = [['❄️', 1, 50], ['🎁', 3, 16], ['⭐', 5, 8], ['🪨', -3, 18]];
+  function spawn() {
+    let r = Math.random() * 92, k = KINDS[0];
+    for (const kk of KINDS) { if ((r -= kk[2]) < 0) { k = kk; break; } }
+    const el = document.createElement('div'); el.className = 'fall'; el.textContent = k[0];
+    const x = rnd(4, area.clientWidth - 48);
+    el.style.left = x + 'px'; el.style.top = '0px';
+    const it = { el, y: -40, v: rnd(90, 170) + (30 - left) * 3, k };
+    el.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); if (!running || it.dead) return; it.dead = true;
+      score = Math.max(0, score + k[1]); sS.textContent = score;
+      const p = document.createElement('div'); p.className = 'pts'; p.textContent = (k[1] > 0 ? '+' : '') + k[1];
+      p.style.left = el.offsetLeft + 'px'; p.style.top = (it.y) + 'px'; area.appendChild(p); setTimeout(() => p.remove(), 800);
+      k[1] > 0 ? tone(k[1] > 2 ? 1047 : 784, 0.6, 0.16) : tone(196, 0.5, 0.2);
+      el.remove();
+    });
+    area.appendChild(el); items.push(it);
+  }
+  function startGame() {
+    items.forEach((i) => i.el.remove()); items = []; score = 0; left = 30; sS.textContent = 0; sT.textContent = 30;
+    over.style.display = 'none'; running = true;
+    let last = performance.now();
+    gLoop = (t) => {
+      if (!running) return;
+      const dt = Math.min(0.05, (t - last) / 1000); last = t;
+      items.forEach((i) => { i.y += i.v * dt; i.el.style.transform = `translateY(${i.y}px)`; if (i.y > area.clientHeight) { i.dead = true; i.el.remove(); } });
+      items = items.filter((i) => !i.dead);
+      requestAnimationFrame(gLoop);
+    };
+    requestAnimationFrame(gLoop);
+    spawnT = setInterval(spawn, 480);
+    gTimer = setInterval(() => { left--; sT.textContent = left; if (left <= 0) endGame(); }, 1000);
+  }
+  function endGame() {
+    running = false; clearInterval(gTimer); clearInterval(spawnT);
+    items.forEach((i) => i.el.remove()); items = [];
+    if (score > best) { best = score; sB.textContent = best; try { localStorage.setItem('xmas.best', best); } catch (e) { /* */ } }
+    over.style.display = 'grid';
+    over.innerHTML = `<div>🎉 ${score}점!<br><small style="font-size:18px">${score >= best && score > 0 ? '최고 기록이에요! ' : ''}다시 하려면 눌러요</small></div>`;
+    tone(659, 1, 0.2); setTimeout(() => tone(988, 1.4, 0.2), 150);
+  }
+  over.onclick = startGame;
+
+  // ---- 선물 ----
+  const MSG = ['올해도 정말 잘 지냈어요. 박수 짝짝짝! 👏', '맛있는 쿠키 한 접시가 도착했어요 🍪', '눈사람이 놀러 왔어요. 같이 놀래요? ⛄', '산타 할아버지가 윙크했어요 😉', '오늘 하루, 웃을 일이 세 번 생길 거예요 😊', '따뜻한 코코아 한 잔 어때요? ☕', '루돌프 코가 반짝! 좋은 일이 생길 거예요 🔴', '당신은 누군가에게 최고의 선물이에요 💝', '엘프들이 몰래 응원하고 있어요 🧝', '별 하나가 소원을 들어줄 준비를 하고 있어요 ⭐'];
+  const gBox = $('#gifts'), gMsg = $('#giftMsg');
+  ['🎁', '🎀', '📦'].forEach((e) => {
+    const b = document.createElement('button'); b.className = 'gift'; b.textContent = e; b.setAttribute('aria-label', '선물 상자');
+    b.onclick = () => {
+      b.textContent = pick(['🧸', '🍬', '🍪', '⛄', '🦌', '⭐', '🎂', '🧦']);
+      b.style.transform = 'scale(1.25) rotate(8deg)'; gMsg.textContent = pick(MSG);
+      ['C5', 'E5', 'G5', 'C6'].forEach((_, i) => setTimeout(() => tone([523, 659, 784, 1047][i], 1.4, 0.2), i * 90));
+      setTimeout(() => { b.textContent = e; b.style.transform = ''; }, 3500);
+    };
+    gBox.appendChild(b);
+  });
+
+  // ---- 오르골 ----
+  const KEYS = [['도', 523.25, '#e63946', 'a'], ['레', 587.33, '#f4802e', 's'], ['미', 659.25, '#f0b429', 'd'], ['솔', 783.99, '#2a9d68', 'f'], ['라', 880, '#2d9cdb', 'g'], ['높은 도', 1046.5, '#7b61d9', 'h'], ['높은 레', 1174.66, '#d94fa8', 'j'], ['높은 미', 1318.5, '#e63946', 'k']];
+  const kEl = $('#keys'), kBtn = {};
+  KEYS.forEach(([n, f, c, k]) => {
+    const b = document.createElement('button'); b.className = 'key'; b.style.background = c; b.innerHTML = `<span>${k.toUpperCase()}</span>`; b.title = n;
+    const play = () => { tone(f); b.classList.add('hit'); setTimeout(() => b.classList.remove('hit'), 120); };
+    b.addEventListener('pointerdown', (e) => { e.preventDefault(); play(); });
+    kEl.appendChild(b); kBtn[k] = play;
+  });
+  addEventListener('keydown', (e) => { if (e.repeat || e.target.tagName === 'INPUT' || e.ctrlKey || e.metaKey) return; const f = kBtn[e.key.toLowerCase()]; if (f) f(); });
+  $('#jingle').onclick = () => {
+    const seq = 'E E E2 E E E2 E G C D E4 F F F F F E E E E D D E D2 G2'.split(' ');
+    const F = { C: 523.25, D: 587.33, E: 659.25, F: 698.46, G: 783.99 }; let t = 0;
+    seq.forEach((s) => { const n = s[0], b = s[1] ? +s[1] : 1; setTimeout(() => tone(F[n] * 1, 1.2, 0.22), t * 1000); t += b * 0.3; });
+  };
+
+  // ---- 소원 별 ----
+  const sky = $('#wishSky');
+  function addStar(text, quiet) {
+    const s = document.createElement('div'); s.className = 'wstar'; s.innerHTML = `⭐<span></span>`; s.lastChild.textContent = text;
+    const x = rnd(6, 90), y = rnd(8, 76); s.style.left = x + '%'; s.style.top = (quiet ? y : 110) + '%'; s.style.animationDelay = rnd(0, 2) + 's';
+    s.style.transition = 'top 1.6s cubic-bezier(.2,.8,.3,1)'; sky.appendChild(s);
+    if (!quiet) requestAnimationFrame(() => requestAnimationFrame(() => { s.style.top = y + '%'; }));
+    if (s.offsetLeft > sky.clientWidth - 110) s.lastChild.style.transform = 'translateX(-80%)';
+  }
+  ['건강하기', '친구랑 놀기', '눈사람 만들기'].forEach((t) => addStar(t, true));
+  $('#wishForm').onsubmit = (e) => {
+    e.preventDefault(); const v = $('#wishIn').value.trim(); if (!v) return;
+    addStar(v); $('#wishIn').value = ''; tone(880, 1.5, 0.2); setTimeout(() => tone(1319, 1.8, 0.18), 120);
+  };
+})();
+</script>
+</body>
+</html>

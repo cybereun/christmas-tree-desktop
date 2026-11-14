@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+<title>Christmas Tree</title>
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; width: 100%; height: 100%; user-select: none; }
+  body { font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; }
+  #stage { position: absolute; left: 0; top: 0; width: 300px; height: 400px; transform-origin: 0 0; }
+  canvas { position: absolute; left: 0; top: 0; width: 300px; height: 400px; }
+
+  #bubble {
+    position: absolute; left: 25px; top: 8px; width: 250px; box-sizing: border-box;
+    padding: 9px 12px 10px; border-radius: 14px;
+    background: rgba(255, 250, 238, .96); color: #5b3b2c;
+    box-shadow: 0 4px 14px rgba(40, 20, 10, .35), 0 0 0 1.5px rgba(214, 160, 92, .55);
+    opacity: 0; transform: translateY(-6px) scale(.94); pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  #bubble.show { opacity: 1; transform: none; }
+  #bubble .t { font-size: 11.5px; font-weight: 700; color: #b5432f; margin-bottom: 3px; }
+  #bubble .m { font-size: 12.5px; line-height: 1.5; word-break: keep-all; }
+
+  #wish {
+    position: absolute; left: 40px; top: 120px; width: 220px; box-sizing: border-box; padding: 12px;
+    border-radius: 14px; background: rgba(28, 34, 58, .95); color: #ffe9b8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .5), 0 0 0 1.5px rgba(255, 214, 120, .5);
+    display: none;
+  }
+  #wish.show { display: block; }
+  #wish .h { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  #wish input {
+    width: 100%; box-sizing: border-box; padding: 7px 9px; font: 13px "Malgun Gothic", sans-serif;
+    border-radius: 8px; border: 1px solid rgba(255, 214, 120, .5); background: rgba(255, 255, 255, .1);
+    color: #fff; outline: none;
+  }
+  #wish input::placeholder { color: rgba(255, 233, 184, .5); }
+  #wish .b { display: flex; gap: 6px; margin-top: 9px; justify-content: flex-end; }
+  #wish button {
+    font: 12px "Malgun Gothic", sans-serif; padding: 5px 12px; border-radius: 8px; cursor: pointer;
+    border: 1px solid rgba(255, 214, 120, .5); background: transparent; color: #ffe9b8;
+  }
+  #wish button.ok { background: #e0a93d; color: #3a2506; border-color: #e0a93d; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c"></canvas>
+  <div id="bubble"><div class="t"></div><div class="m"></div></div>
+  <div id="wish">
+    <div class="h">🌟 소원 달기</div>
+    <input id="wishText" maxlength="30" placeholder="올해 이루고 싶은 소원" autocomplete="off">
+    <div class="b"><button id="wishCancel">취소</button><button id="wishOk" class="ok">트리에 달기</button></div>
+  </div>
+</div>
+<script src="sound.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

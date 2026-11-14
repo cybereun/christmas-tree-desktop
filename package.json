@@ -1,0 +1,34 @@
+{
+  "name": "christmas-tree-desktop",
+  "version": "1.0.0",
+  "description": "작은 데스크탑 크리스마스 트리",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "local.christmas.tree",
+    "productName": "ChristmasTree",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "assets/**"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.png"
+    },
+    "portable": {
+      "artifactName": "ChristmasTree-portable.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0"
+  }
+}
