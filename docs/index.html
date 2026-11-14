@@ -154,6 +154,19 @@
   .santa-fly { position: fixed; top: 96px; left: -140px; font-size: 52px; z-index: 45; pointer-events: none; animation: fly 14s linear infinite; animation-delay: 3s; white-space: nowrap; }
   @keyframes fly { from { transform: translateX(0) translateY(0); } 50% { transform: translateX(60vw) translateY(24px); } to { transform: translateX(calc(100vw + 200px)) translateY(-6px); } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .santa-fly { display: none; } }
+
+  /* 스크린샷 갤러리 */
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; }
+  .shot { margin: 0; text-align: center; }
+  .shot .scr { border-radius: 26px; padding: 14px 10px 6px; border: 5px solid #fff; box-shadow: 0 12px 28px rgba(0,0,0,.4); transition: transform .25s; }
+  .shot:nth-child(odd) .scr { transform: rotate(-1.6deg); } .shot:nth-child(even) .scr { transform: rotate(1.6deg); }
+  .shot:hover .scr { transform: rotate(0) translateY(-6px) scale(1.03); }
+  .shot img { width: 100%; display: block; }
+  .shot figcaption { margin-top: 12px; font-size: 21px; color: var(--gold); }
+  .shot figcaption small { display: block; font-family: "Gamja Flower", sans-serif; font-size: 18px; color: var(--cream); opacity: .9; }
+  .bg1 { background: linear-gradient(160deg, #1d2b64, #4a6fa5); } .bg2 { background: linear-gradient(160deg, #42275a, #734b6d); }
+  .bg3 { background: linear-gradient(160deg, #134e5e, #71b280); } .bg4 { background: linear-gradient(160deg, #3a1c71, #d76d77); }
+  .bg5 { background: linear-gradient(160deg, #0f2027, #2c5364); } .bg6 { background: linear-gradient(160deg, #cfe3ff, #f6e6ff); }
 </style>
 </head>
 <body>
@@ -165,6 +178,7 @@
     <b>🎄 반짝 트리</b>
     <div class="links">
       <a class="l" href="#features">특징</a>
+      <a class="l" href="#shots">화면</a>
       <a class="l" href="#playground">놀이터</a>
       <a class="l" href="#more">더 놀기</a>
       <a class="l dl" href="https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.0/ChristmasTree-portable.exe">🎁 다운로드</a>
@@ -198,6 +212,19 @@
       <div class="feat"><span class="e">🛷</span><h3>산타 할아버지</h3><p>가끔 썰매가 슝~ 지나가며 선물을 두고 가요</p></div>
       <div class="feat"><span class="e">🎶</span><h3>오르골 소리</h3><p>고요한 밤, 징글벨… 포근한 오르골 BGM</p></div>
       <div class="feat"><span class="e">📅</span><h3>D-Day 알림</h3><p>크리스마스까지 며칠 남았는지 알려줘요</p></div>
+    </div>
+  </section>
+
+  <section id="shots">
+    <h2>📸 실제 화면 구경하기</h2>
+    <p class="sub">바탕화면 어디에 놓아도 배경이 쏙 비쳐요 (투명 창!)</p>
+    <div class="shots">
+      <figure class="shot"><div class="scr bg1"><img loading="lazy" src="cap-tree.png" alt="선물이 쌓인 크리스마스 트리"></div><figcaption>🎄 기본 모습<small>눈이 내리고 전구가 반짝!</small></figcaption></figure>
+      <figure class="shot"><div class="scr bg2"><img loading="lazy" src="cap-open.png" alt="선물을 열면 색종이와 메시지가 나와요"></div><figcaption>🎁 선물 열기<small>색종이가 팡! 따뜻한 메시지도 나와요</small></figcaption></figure>
+      <figure class="shot"><div class="scr bg3"><img loading="lazy" src="cap-full.png" alt="장식으로 가득 찬 트리"></div><figcaption>🧦 장식이 가득<small>받은 장식이 트리에 차곡차곡</small></figcaption></figure>
+      <figure class="shot"><div class="scr bg4"><img loading="lazy" src="cap-wish.png" alt="소원 달기 창"></div><figcaption>🌟 소원 적기<small>우클릭 → 소원 달기</small></figcaption></figure>
+      <figure class="shot"><div class="scr bg5"><img loading="lazy" src="cap-wish-done.png" alt="소원 별이 달린 트리"></div><figcaption>⭐ 소원 별 완성<small>반짝이는 별을 누르면 소원이 보여요</small></figcaption></figure>
+      <figure class="shot"><div class="scr bg6"><img loading="lazy" src="cap-sleigh.png" alt="산타 썰매가 지나가는 모습"></div><figcaption>🛷 산타 썰매 출동<small>슝~ 지나가며 선물을 두고 가요</small></figcaption></figure>
     </div>
   </section>
 
