@@ -1,6 +1,6 @@
 {
   "name": "christmas-tree-desktop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "작은 데스크탑 크리스마스 트리",
   "main": "main.js",
   "scripts": {

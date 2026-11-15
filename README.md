@@ -12,7 +12,7 @@
 눈이 내리고, 전구가 반짝이고, 선물은 시간이 지나면 생기고, 눌러서 열 수 있어요.
 
 **👉 홍보 페이지 · 놀이터:** https://cybereun.github.io/christmas-tree-desktop/
-**⬇️ 다운로드:** [ChristmasTree-portable.exe (v1.0.0)](https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.0/ChristmasTree-portable.exe)
+**⬇️ 다운로드:** [ChristmasTree-portable.exe (v1.0.1)](https://github.com/cybereun/christmas-tree-desktop/releases/download/v1.0.1/ChristmasTree-portable.exe)
 
 ## 기능
 - 투명 배경, 항상 위, 드래그 이동, 투명한 곳은 클릭 통과
