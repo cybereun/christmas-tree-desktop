@@ -695,8 +695,26 @@
     const kind = h && h.k;
     document.body.style.cursor = (kind === 'gift' || kind === 'sleigh' || kind === 'orn' || kind === 'bubble') ? 'pointer' : 'default';
   }
+  function releasePress() {
+    if (!pressed && !dragging) return;
+    pressed = null; dragging = false;
+    window.api.dragEnd();
+  }
+  // 메인 프로세스가 커서 위치를 보내 준다. Windows의 mousemove 포워딩이 끊겨도 클릭 통과 상태를 복구하기 위함.
+  let lastSync = 0;
+  window.api.onCursor((lx, ly, bw) => {
+    if (pressed || wishOpen) return;
+    const now = performance.now();
+    if (now - lastSync > 1000) { lastSync = now; window.api.ignoreMouse(ignoring); }
+    if (lx < 0) { if (!ignoring) applyHit(null); return; }
+    const k = bw / W;
+    mouse.x = lx / k; mouse.y = ly / k;
+    applyHit(hitTest(mouse.x, mouse.y));
+  });
+  window.addEventListener('blur', releasePress);
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX / K; mouse.y = e.clientY / K;
+    if (pressed && e.buttons === 0) releasePress(); // mouseup을 놓친 경우 복구
     if (pressed) {
       if (!dragging && (Math.abs(e.screenX - pressed.sx) > 4 || Math.abs(e.screenY - pressed.sy) > 4) && pressed.canDrag) {
         dragging = true;

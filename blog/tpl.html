@@ -1,0 +1,155 @@
+<title>네이버 블로그 글 미리보기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* Layout: 왼쪽에 네이버 글처럼 보이는 종이, 오른쪽에 복사·SEO 점검 패널 */
+  :root {
+    --bg: #f3f1ee; --panel: #ffffff; --ink: #231f1f; --muted: #6d6662; --line: #e2ddd8;
+    --accent: #c1121f; --accent-ink: #ffffff; --ok: #1b6b47; --ok-bg: #e6f4ec;
+    --paper: #ffffff; --paper-ink: #333333;
+    --font: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #171414; --panel: #221e1e; --ink: #f1ece8; --muted: #a79f9a; --line: #3a3434;
+    --accent: #ff6b74; --accent-ink: #2a0508; --ok: #7bd9a6; --ok-bg: #1d3328; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #171414; --panel: #221e1e; --ink: #f1ece8; --muted: #a79f9a; --line: #3a3434;
+    --accent: #ff6b74; --accent-ink: #2a0508; --ok: #7bd9a6; --ok-bg: #1d3328; color-scheme: dark; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.55;
+    padding-block: 20px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+  @media (max-width: 880px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
+  h1.top { font-size: 20px; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 16px; }
+  .paper { background: var(--paper); color: var(--paper-ink); border: 1px solid var(--line); border-radius: 6px; padding: 28px 30px; min-width: 0; overflow-wrap: anywhere; word-break: keep-all; font-family: var(--font); }
+  .paper a { word-break: break-all; }
+  @media (max-width: 520px) { .paper { padding: 18px 16px; } }
+  aside { position: sticky; top: 16px; display: grid; gap: 14px; min-width: 0; }
+  @media (max-width: 880px) { aside { position: static; order: -1; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+  .card h2 { font-size: 13px; margin: 0 0 8px; letter-spacing: .02em; color: var(--muted); font-weight: 700; }
+  .btns { display: grid; gap: 8px; }
+  button { font: inherit; font-weight: 700; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:hover { filter: brightness(1.06); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  #status { min-height: 20px; margin-top: 8px; font-size: 13px; color: var(--ok); }
+  .stat { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--line); font-variant-numeric: tabular-nums; }
+  .stat:last-child { border-bottom: 0; }
+  ul.chk { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  ul.chk li { padding-left: 22px; position: relative; font-size: 13px; }
+  ul.chk li::before { content: "✓"; position: absolute; left: 0; color: var(--ok); font-weight: 700; }
+  .urls { display: grid; gap: 6px; }
+  .urls code { display: block; font-size: 11.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; overflow-wrap: anywhere; user-select: all; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { background: var(--ok-bg); color: var(--ok); border-radius: 99px; padding: 2px 9px; font-size: 12px; }
+  textarea#src { position: fixed; left: -9999px; top: 0; }
+</style>
+
+<div class="wrap">
+  <main>
+    <h1 class="top">네이버 블로그 글 미리보기</h1>
+    <p class="lead">아래 흰 영역이 실제 글입니다. 오른쪽(휴대폰에서는 위쪽) 버튼으로 복사해 네이버 스마트에디터에 붙여넣으세요.</p>
+    <article class="paper" id="post">
+%%POST%%
+    </article>
+  </main>
+
+  <aside>
+    <div class="card">
+      <h2>복사하기</h2>
+      <div class="btns">
+        <button class="primary" id="copyRich" type="button">본문 복사 (서식 포함)</button>
+        <button id="copySrc" type="button">HTML 소스 복사</button>
+        <button id="copyTitle" type="button">제목만 복사</button>
+      </div>
+      <div id="status" role="status" aria-live="polite"></div>
+    </div>
+    <div class="card">
+      <h2>글 정보</h2>
+      <div class="stat"><span>글자수 (공백 포함)</span><b id="cnt1">-</b></div>
+      <div class="stat"><span>글자수 (공백 제외)</span><b id="cnt2">-</b></div>
+      <div class="stat"><span>제목 길이</span><b id="cnt3">-</b></div>
+      <div class="stat"><span>소제목 / 목록 / FAQ</span><b>7 / 3 / 5</b></div>
+    </div>
+    <div class="card">
+      <h2>SEO · AEO 반영 사항</h2>
+      <ul class="chk">
+        <li>핵심 키워드 '바탕화면 크리스마스 트리'를 제목, 첫 문단, 소제목, 태그에 배치</li>
+        <li>글 맨 위 '한 줄 요약'으로 질문에 바로 답하는 문장 제공</li>
+        <li>FAQ 5개를 질문과 답변(Q/A) 형식으로 작성</li>
+        <li>번호 소제목과 목록으로 구조화해 훑어 읽기 쉽게 구성</li>
+        <li>다운로드, 소개 페이지 링크를 본문에 직접 노출</li>
+        <li>읽을거리(트리, 캐럴, 루돌프, 산타 추적, 한국의 크리스마스)로 체류 시간 확보</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>발행 전 확인</h2>
+      <ul class="chk">
+        <li>네이버 에디터는 외부 이미지 주소를 붙이지 못합니다. 아래 이미지를 저장해 직접 올리세요.</li>
+        <li>대표 이미지는 cap-full.png 추천, 이미지 대체 텍스트에 '바탕화면 크리스마스 트리' 입력</li>
+        <li>발행 설정에서 검색 허용을 켜고, 카테고리는 'IT·컴퓨터' 또는 '일상'</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>업로드용 이미지 주소</h2>
+      <div class="urls">
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-full.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-open.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-sleigh.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-wish-done.png</code>
+      </div>
+    </div>
+    <div class="card">
+      <h2>추천 태그</h2>
+      <div class="tags"><span>#바탕화면크리스마스트리</span><span>#크리스마스프로그램</span><span>#윈도우크리스마스</span><span>#포터블프로그램</span><span>#무료프로그램</span><span>#크리스마스선물</span><span>#연말분위기</span><span>#반짝크리스마스트리</span></div>
+    </div>
+  </aside>
+</div>
+<textarea id="src" aria-hidden="true" tabindex="-1"></textarea>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const post = $('#post'), status = $('#status');
+  const text = post.innerText;
+  $('#cnt1').textContent = text.replace(/\n/g, '').length.toLocaleString() + '자';
+  $('#cnt2').textContent = text.replace(/\s/g, '').length.toLocaleString() + '자';
+  const title = post.querySelector('h1').innerText.trim();
+  $('#cnt3').textContent = title.length + '자';
+  let timer;
+  const say = (m) => { status.textContent = m; clearTimeout(timer); timer = setTimeout(() => { status.textContent = ''; }, 3500); };
+
+  function selectFallback(node) {
+    const r = document.createRange(); r.selectNodeContents(node);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    return ok;
+  }
+  function copyText(value, okMsg) {
+    const t = $('#src'); t.value = value; t.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    say(ok ? okMsg : '복사에 실패했어요. 본문 복사를 이용해 주세요.');
+  }
+  $('#copyRich').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([post.innerHTML], { type: 'text/html' }),
+        'text/plain': new Blob([post.innerText], { type: 'text/plain' }),
+      })]);
+      say('복사했어요. 네이버 에디터에 Ctrl+V 하세요.');
+    } catch (e) {
+      say(selectFallback(post) ? '복사했어요. 네이버 에디터에 Ctrl+V 하세요.' : '글이 선택되었어요. Ctrl+C 후 붙여넣으세요.');
+    }
+  });
+  $('#copySrc').addEventListener('click', async () => {
+    const html = post.innerHTML.trim();
+    try { await navigator.clipboard.writeText(html); say('HTML 소스를 복사했어요.'); }
+    catch (e) { copyText(html, 'HTML 소스를 복사했어요.'); }
+  });
+  $('#copyTitle').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(title); say('제목을 복사했어요.'); }
+    catch (e) { copyText(title, '제목을 복사했어요.'); }
+  });
+})();
+</script>

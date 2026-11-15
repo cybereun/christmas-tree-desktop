@@ -1,0 +1,210 @@
+<title>네이버 블로그 글 미리보기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* Layout: 왼쪽에 네이버 글처럼 보이는 종이, 오른쪽에 복사·SEO 점검 패널 */
+  :root {
+    --bg: #f3f1ee; --panel: #ffffff; --ink: #231f1f; --muted: #6d6662; --line: #e2ddd8;
+    --accent: #c1121f; --accent-ink: #ffffff; --ok: #1b6b47; --ok-bg: #e6f4ec;
+    --paper: #ffffff; --paper-ink: #333333;
+    --font: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #171414; --panel: #221e1e; --ink: #f1ece8; --muted: #a79f9a; --line: #3a3434;
+    --accent: #ff6b74; --accent-ink: #2a0508; --ok: #7bd9a6; --ok-bg: #1d3328; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #171414; --panel: #221e1e; --ink: #f1ece8; --muted: #a79f9a; --line: #3a3434;
+    --accent: #ff6b74; --accent-ink: #2a0508; --ok: #7bd9a6; --ok-bg: #1d3328; color-scheme: dark; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.55;
+    padding-block: 20px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+  @media (max-width: 880px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
+  h1.top { font-size: 20px; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 16px; }
+  .paper { background: var(--paper); color: var(--paper-ink); border: 1px solid var(--line); border-radius: 6px; padding: 28px 30px; min-width: 0; overflow-wrap: anywhere; word-break: keep-all; font-family: var(--font); }
+  .paper a { word-break: break-all; }
+  @media (max-width: 520px) { .paper { padding: 18px 16px; } }
+  aside { position: sticky; top: 16px; display: grid; gap: 14px; min-width: 0; }
+  @media (max-width: 880px) { aside { position: static; order: -1; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+  .card h2 { font-size: 13px; margin: 0 0 8px; letter-spacing: .02em; color: var(--muted); font-weight: 700; }
+  .btns { display: grid; gap: 8px; }
+  button { font: inherit; font-weight: 700; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:hover { filter: brightness(1.06); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  #status { min-height: 20px; margin-top: 8px; font-size: 13px; color: var(--ok); }
+  .stat { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--line); font-variant-numeric: tabular-nums; }
+  .stat:last-child { border-bottom: 0; }
+  ul.chk { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  ul.chk li { padding-left: 22px; position: relative; font-size: 13px; }
+  ul.chk li::before { content: "✓"; position: absolute; left: 0; color: var(--ok); font-weight: 700; }
+  .urls { display: grid; gap: 6px; }
+  .urls code { display: block; font-size: 11.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; overflow-wrap: anywhere; user-select: all; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { background: var(--ok-bg); color: var(--ok); border-radius: 99px; padding: 2px 9px; font-size: 12px; }
+  textarea#src { position: fixed; left: -9999px; top: 0; }
+</style>
+
+<div class="wrap">
+  <main>
+    <h1 class="top">네이버 블로그 글 미리보기</h1>
+    <p class="lead">아래 흰 영역이 실제 글입니다. 오른쪽(휴대폰에서는 위쪽) 버튼으로 복사해 네이버 스마트에디터에 붙여넣으세요.</p>
+    <article class="paper" id="post">
+<h1 style="font-size:26px;line-height:1.4;margin:0 0 14px;color:#1d1d1d;">바탕화면 크리스마스 트리 프로그램 추천, 설치 없이 무료로 쓰는 '반짝 크리스마스 트리'</h1>
+<div style="background:#fff4f4;border:1px solid #f3c4c4;border-radius:10px;padding:14px 16px;margin:0 0 22px;font-size:16px;line-height:1.7;color:#333;">
+<b style="color:#c1121f;">한 줄 요약</b><br>
+'반짝 크리스마스 트리'는 윈도우 바탕화면에 작은 트리를 띄워 주는 무료 프로그램입니다. 설치 없이 exe 파일을 더블클릭하면 실행되고, 눈이 내리고 전구가 반짝이며 약 2분마다 선물이 생깁니다. 다운로드는 GitHub 릴리스, 미리 체험은 소개 페이지에서 할 수 있습니다.
+</div>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">1. 바탕화면 크리스마스 트리, 어떤 프로그램인가요?</h2>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">12월이 되면 책상 위에 작은 트리 하나 올려두고 싶은 마음이 들지요. 그런데 사무실이나 학교에서는 진짜 트리를 놓기가 쉽지 않습니다. 그래서 모니터 안에 트리를 심어 보았습니다. 이름은 '반짝 크리스마스 트리'. 배경이 투명한 작은 창으로 떠서 다른 작업을 방해하지 않고, 화면 구석에서 혼자 반짝거립니다.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">가장 큰 특징은 선물입니다. 프로그램을 켜 두면 시간이 지날수록 트리 아래에 선물 상자가 하나씩 떨어집니다. 상자를 누르면 색종이가 터지면서 따뜻한 한마디가 나오고, 받은 장식은 트리에 걸립니다. 하루 종일 일하다가 문득 눌러 보면 은근히 위로가 됩니다.</p>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">2. 주요 기능 한눈에 보기</h2>
+<ul style="font-size:16px;line-height:1.9;color:#333;margin:0 0 12px;padding-left:22px;">
+<li><b>눈 내리는 투명 창</b>: 배경 없이 트리만 보이고 항상 위에 떠 있어요. 끌어서 원하는 곳에 둘 수 있습니다.</li>
+<li><b>반짝이는 전구와 별</b>: 알록달록한 전구가 제각각 깜빡입니다.</li>
+<li><b>시간이 지나면 생기는 선물</b>: 약 2분마다 하나씩, 최대 6개까지 쌓입니다.</li>
+<li><b>장식 모으기</b>: 양말, 눈사람, 진저브레드, 방울 등 8종을 모아 트리를 꾸밉니다.</li>
+<li><b>소원 별 달기</b>: 우클릭 메뉴에서 소원을 적으면 별로 걸립니다.</li>
+<li><b>산타 썰매</b>: 가끔 화면 위를 지나가며 선물을 두고 갑니다.</li>
+<li><b>오르골 사운드</b>: 효과음과 BGM(고요한 밤, 징글벨)을 켜고 끌 수 있습니다.</li>
+<li><b>D-Day와 시간대 분위기</b>: 크리스마스까지 남은 날을 보여 주고, 밤에는 불빛이 더 은은해집니다.</li>
+</ul>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">3. 다운로드와 사용 방법</h2>
+<ol style="font-size:16px;line-height:1.9;color:#333;margin:0 0 12px;padding-left:22px;">
+<li>GitHub 릴리스 페이지에서 <b>ChristmasTree-portable.exe</b>(약 105MB)를 받습니다.</li>
+<li>설치 없이 파일을 더블클릭하면 바로 트리가 나타납니다.</li>
+<li>트리를 마우스로 끌어 원하는 위치로 옮깁니다.</li>
+<li>우클릭하면 소원 달기, 소리, 크기, 종료 메뉴가 열립니다.</li>
+</ol>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">처음 실행할 때 윈도우 SmartScreen 경고가 뜰 수 있습니다. 코드 서명이 없는 개인 프로그램이라 나오는 안내이고, '추가 정보' 다음에 '실행'을 누르면 됩니다. 지우고 싶을 땐 파일만 삭제하면 끝입니다. 현재는 Windows 전용입니다.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">다운로드: <a href="https://github.com/cybereun/christmas-tree-desktop/releases/latest" style="color:#c1121f;">https://github.com/cybereun/christmas-tree-desktop/releases/latest</a></p>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">4. 소개 페이지에서 먼저 놀아보세요</h2>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">설치가 망설여진다면 소개 페이지부터 구경해 보세요. 실제 실행 화면 캡처를 볼 수 있고, 브라우저에서 바로 즐기는 미니 놀이터도 있습니다. 휴대폰에서도 열립니다.</p>
+<ul style="font-size:16px;line-height:1.9;color:#333;margin:0 0 12px;padding-left:22px;">
+<li><b>크리스마스 카운트다운</b>: 산타 썰매가 집까지 얼마나 왔는지 보여 줍니다.</li>
+<li><b>트리 꾸미기</b>: 장식을 골라 트리를 톡톡 눌러 꾸밉니다.</li>
+<li><b>눈송이·선물 잡기</b>: 30초 동안 떨어지는 눈송이와 선물을 잡는 게임입니다. 석탄은 피하세요.</li>
+<li><b>오늘의 선물 열기</b>와 <b>오르골 피아노</b>, <b>소원 별 날리기</b>까지 준비되어 있습니다.</li>
+</ul>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">소개 페이지: <a href="https://cybereun.github.io/christmas-tree-desktop/" style="color:#c1121f;">https://cybereun.github.io/christmas-tree-desktop/</a></p>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">5. 읽을거리: 크리스마스에 얽힌 이야기</h2>
+<h3 style="font-size:18px;margin:18px 0 8px;color:#c1121f;">트리는 언제부터 집 안으로 들어왔을까</h3>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">겨울에도 푸른 전나무를 집 안에 들이는 풍습은 16~17세기 독일 지역 기록에서 찾아볼 수 있습니다. 푸른 나무가 생명과 희망을 뜻한다고 여겼기 때문입니다. 이 풍습이 영국과 미국으로 크게 퍼진 계기는 1848년, 빅토리아 여왕 가족이 트리 곁에 둘러선 모습을 담은 그림이 신문에 실린 일로 알려져 있습니다.</p>
+<h3 style="font-size:18px;margin:18px 0 8px;color:#c1121f;">고요한 밤과 징글벨</h3>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">'고요한 밤'은 1818년 오스트리아의 작은 마을 오베른도르프에서 처음 불렸습니다. 오르간이 고장 나 기타 반주로 불렀다는 이야기가 전해집니다. '징글벨'은 1850년대에 미국에서 만들어졌고, 원래는 겨울 썰매 노래였다는 설명이 많습니다. 우리가 크리스마스 캐럴로 기억하는 곡들 중엔 이렇게 뜻밖의 사연을 가진 노래가 많아요.</p>
+<h3 style="font-size:18px;margin:18px 0 8px;color:#c1121f;">루돌프와 산타 추적의 탄생</h3>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">빨간 코 루돌프는 1939년 미국 백화점 판촉용 이야기책에서 태어났습니다. 산타 추적 전통도 재미있습니다. 1955년, 한 백화점 광고에 산타 직통 전화번호가 잘못 인쇄되었고 아이들의 전화가 미군 방공 기관으로 걸려 왔습니다. 담당자가 웃으며 산타의 위치를 알려 주었고, 이 일이 이어져 지금도 매년 12월 24일마다 산타 추적 서비스로 이어지고 있다고 합니다.</p>
+<h3 style="font-size:18px;margin:18px 0 8px;color:#c1121f;">우리나라의 크리스마스</h3>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">우리나라에서 크리스마스는 1949년에 공휴일로 지정되었습니다. 종교를 떠나 가족, 연인, 친구와 케이크를 나누고 따뜻한 마음을 전하는 날로 자리 잡았지요. 눈 내리는 화이트 크리스마스를 기대하는 마음도 같고요. 이 프로그램의 눈과 트리가 그 설렘을 조금이라도 데워 주면 좋겠습니다.</p>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">6. 자주 묻는 질문(FAQ)</h2>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 8px;"><b>Q. 바탕화면 크리스마스 트리 프로그램은 무료인가요?</b><br>A. 네, 완전 무료이고 광고도 없습니다.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 8px;"><b>Q. 설치해야 하나요?</b><br>A. 아니요. 포터블 exe라서 더블클릭만 하면 실행되고, 삭제도 파일만 지우면 됩니다.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 8px;"><b>Q. 실행하면 파란 경고창이 떠요.</b><br>A. 코드 서명이 없는 개인 프로그램이라 SmartScreen이 안내하는 것입니다. '추가 정보', '실행' 순서로 누르세요.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 8px;"><b>Q. 맥이나 휴대폰에서도 쓸 수 있나요?</b><br>A. 앱은 Windows 전용입니다. 소개 페이지의 놀이터는 휴대폰 브라우저에서도 즐길 수 있어요.</p>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;"><b>Q. 트리를 끄거나 옮기려면?</b><br>A. 마우스로 끌어 옮기고, 우클릭 메뉴에서 소리, 크기, 종료를 조절합니다.</p>
+<h2 style="font-size:21px;margin:26px 0 10px;color:#1b6b47;">마무리</h2>
+<p style="font-size:16px;line-height:1.8;color:#333;margin:0 0 12px;">올해는 모니터 한쪽에도 작은 크리스마스를 놓아 보세요. 일하다 지칠 때 선물 상자를 하나 열면, 잠깐 웃을 일이 생길지도 모릅니다. 메리 크리스마스!</p>
+<p style="font-size:15px;line-height:1.8;color:#666;margin:0;">#바탕화면크리스마스트리 #크리스마스프로그램 #윈도우크리스마스 #포터블프로그램 #무료프로그램 #크리스마스선물 #연말분위기 #반짝크리스마스트리</p>
+
+    </article>
+  </main>
+
+  <aside>
+    <div class="card">
+      <h2>복사하기</h2>
+      <div class="btns">
+        <button class="primary" id="copyRich" type="button">본문 복사 (서식 포함)</button>
+        <button id="copySrc" type="button">HTML 소스 복사</button>
+        <button id="copyTitle" type="button">제목만 복사</button>
+      </div>
+      <div id="status" role="status" aria-live="polite"></div>
+    </div>
+    <div class="card">
+      <h2>글 정보</h2>
+      <div class="stat"><span>글자수 (공백 포함)</span><b id="cnt1">-</b></div>
+      <div class="stat"><span>글자수 (공백 제외)</span><b id="cnt2">-</b></div>
+      <div class="stat"><span>제목 길이</span><b id="cnt3">-</b></div>
+      <div class="stat"><span>소제목 / 목록 / FAQ</span><b>7 / 3 / 5</b></div>
+    </div>
+    <div class="card">
+      <h2>SEO · AEO 반영 사항</h2>
+      <ul class="chk">
+        <li>핵심 키워드 '바탕화면 크리스마스 트리'를 제목, 첫 문단, 소제목, 태그에 배치</li>
+        <li>글 맨 위 '한 줄 요약'으로 질문에 바로 답하는 문장 제공</li>
+        <li>FAQ 5개를 질문과 답변(Q/A) 형식으로 작성</li>
+        <li>번호 소제목과 목록으로 구조화해 훑어 읽기 쉽게 구성</li>
+        <li>다운로드, 소개 페이지 링크를 본문에 직접 노출</li>
+        <li>읽을거리(트리, 캐럴, 루돌프, 산타 추적, 한국의 크리스마스)로 체류 시간 확보</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>발행 전 확인</h2>
+      <ul class="chk">
+        <li>네이버 에디터는 외부 이미지 주소를 붙이지 못합니다. 아래 이미지를 저장해 직접 올리세요.</li>
+        <li>대표 이미지는 cap-full.png 추천, 이미지 대체 텍스트에 '바탕화면 크리스마스 트리' 입력</li>
+        <li>발행 설정에서 검색 허용을 켜고, 카테고리는 'IT·컴퓨터' 또는 '일상'</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>업로드용 이미지 주소</h2>
+      <div class="urls">
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-full.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-open.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-sleigh.png</code>
+        <code>https://cybereun.github.io/christmas-tree-desktop/cap-wish-done.png</code>
+      </div>
+    </div>
+    <div class="card">
+      <h2>추천 태그</h2>
+      <div class="tags"><span>#바탕화면크리스마스트리</span><span>#크리스마스프로그램</span><span>#윈도우크리스마스</span><span>#포터블프로그램</span><span>#무료프로그램</span><span>#크리스마스선물</span><span>#연말분위기</span><span>#반짝크리스마스트리</span></div>
+    </div>
+  </aside>
+</div>
+<textarea id="src" aria-hidden="true" tabindex="-1"></textarea>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const post = $('#post'), status = $('#status');
+  const text = post.innerText;
+  $('#cnt1').textContent = text.replace(/\n/g, '').length.toLocaleString() + '자';
+  $('#cnt2').textContent = text.replace(/\s/g, '').length.toLocaleString() + '자';
+  const title = post.querySelector('h1').innerText.trim();
+  $('#cnt3').textContent = title.length + '자';
+  let timer;
+  const say = (m) => { status.textContent = m; clearTimeout(timer); timer = setTimeout(() => { status.textContent = ''; }, 3500); };
+
+  function selectFallback(node) {
+    const r = document.createRange(); r.selectNodeContents(node);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    return ok;
+  }
+  function copyText(value, okMsg) {
+    const t = $('#src'); t.value = value; t.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    say(ok ? okMsg : '복사에 실패했어요. 본문 복사를 이용해 주세요.');
+  }
+  $('#copyRich').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([post.innerHTML], { type: 'text/html' }),
+        'text/plain': new Blob([post.innerText], { type: 'text/plain' }),
+      })]);
+      say('복사했어요. 네이버 에디터에 Ctrl+V 하세요.');
+    } catch (e) {
+      say(selectFallback(post) ? '복사했어요. 네이버 에디터에 Ctrl+V 하세요.' : '글이 선택되었어요. Ctrl+C 후 붙여넣으세요.');
+    }
+  });
+  $('#copySrc').addEventListener('click', async () => {
+    const html = post.innerHTML.trim();
+    try { await navigator.clipboard.writeText(html); say('HTML 소스를 복사했어요.'); }
+    catch (e) { copyText(html, 'HTML 소스를 복사했어요.'); }
+  });
+  $('#copyTitle').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(title); say('제목을 복사했어요.'); }
+    catch (e) { copyText(title, '제목을 복사했어요.'); }
+  });
+})();
+</script>

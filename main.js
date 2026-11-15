@@ -3,6 +3,10 @@ const path = require('path');
 const fs = require('fs');
 
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+// 창이 다른 창에 가려졌을 때 렌더링/타이머가 멈춰 효과가 안 나오는 문제 방지
+app.commandLine.appendSwitch('disable-features', 'CalculateNativeWinOcclusion');
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
+app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');
 
 const FAST = process.argv.includes('--fast');
 const SIZES = [
@@ -47,6 +51,26 @@ function clampToDisplays(x, y, size) {
   return { x: Math.round(cx), y: Math.round(cy) };
 }
 
+// 배율이 다른 모니터 사이를 넘어갈 때 Windows에서 setBounds가 한 번에 안 먹는 경우가 있어 확인 후 재시도한다.
+function forceBounds(target, tries) {
+  if (!win || win.isDestroyed()) return;
+  tries = tries == null ? 4 : tries;
+  win.setResizable(true);
+  win.setBounds(target);
+  win.setResizable(false);
+  const b = win.getBounds();
+  const off = Math.abs(b.x - target.x) > 2 || Math.abs(b.y - target.y) > 2 || b.width !== target.width || b.height !== target.height;
+  if (off && tries > 0) setTimeout(() => forceBounds(target, tries - 1), 60);
+  else if (win) { const f = win.getBounds(); settings.x = f.x; settings.y = f.y; saveSettings(); }
+}
+function resetPosition() {
+  if (!win) return;
+  win.showInactive();
+  const s = SIZES[settings.size] || SIZES[1];
+  const p = defaultPosition(s);
+  forceBounds({ x: p.x, y: p.y, width: s.w, height: s.h });
+}
+
 function pushSettings() {
   if (win && !win.isDestroyed()) win.webContents.send('settings', publicSettings());
 }
@@ -71,7 +95,7 @@ function setSize(i) {
     // keep the bottom-center anchored so the tree stays put
     const nx = Math.round(b.x + b.width / 2 - s.w / 2);
     const ny = Math.round(b.y + b.height - s.h);
-    win.setBounds({ x: nx, y: ny, width: s.w, height: s.h });
+    forceBounds({ x: nx, y: ny, width: s.w, height: s.h });
   }
   saveSettings();
   pushSettings();
@@ -110,12 +134,7 @@ function buildMenu() {
     { type: 'separator' },
     {
       label: '위치 초기화',
-      click: () => {
-        const s = SIZES[settings.size];
-        const p = defaultPosition(s);
-        if (win) win.setBounds({ x: p.x, y: p.y, width: s.w, height: s.h });
-        settings.x = p.x; settings.y = p.y; saveSettings();
-      },
+      click: () => resetPosition(),
     },
     { label: '트리 비우기 (장식·선물 초기화)', click: () => win && win.webContents.send('cmd', 'reset') },
     { type: 'separator' },
@@ -153,6 +172,19 @@ function createWindow() {
     }, 400);
   });
   win.on('closed', () => { win = null; });
+
+  // 마우스 포워딩이 끊겨도 동작하도록 커서 위치를 주기적으로 렌더러에 전달
+  let wasInside = false;
+  setInterval(() => {
+    if (!win || win.isDestroyed() || !win.isVisible()) return;
+    const c = screen.getCursorScreenPoint();
+    const b = win.getBounds();
+    const lx = c.x - b.x, ly = c.y - b.y;
+    const inside = lx >= 0 && ly >= 0 && lx < b.width && ly < b.height;
+    if (inside) win.webContents.send('cursor', lx, ly, b.width);
+    else if (wasInside) win.webContents.send('cursor', -1, -1, b.width);
+    wasInside = inside;
+  }, 40);
 }
 
 // ---- IPC ----
@@ -177,6 +209,11 @@ ipcMain.on('drag-move', () => {
     y: drag.bounds.y + (c.y - drag.cursor.y),
     width: drag.bounds.width, height: drag.bounds.height,
   });
+  const nb = win.getBounds();
+  if (nb.width !== drag.bounds.width || nb.height !== drag.bounds.height) {
+    // 배율이 다른 모니터로 넘어가며 크기가 틀어졌다면 바로잡는다
+    win.setBounds({ x: nb.x, y: nb.y, width: drag.bounds.width, height: drag.bounds.height });
+  }
 });
 ipcMain.on('drag-end', () => { drag = null; });
 ipcMain.on('menu', () => { if (win) buildMenu().popup({ window: win }); });
@@ -186,6 +223,12 @@ app.whenReady().then(() => {
   loadSettings();
   createWindow();
   applyAutoLaunch();
+  if (process.argv.includes('--test-reset')) {
+    // 자체 점검용: 창을 멀리 옮긴 뒤 위치 초기화가 되는지 확인
+    setTimeout(() => { win.setBounds({ x: 50, y: 50, width: win.getBounds().width, height: win.getBounds().height }); }, 2500);
+    setTimeout(() => { resetPosition(); }, 4000);
+    setTimeout(() => { fs.writeFileSync(path.join(app.getPath('temp'), 'xmas-reset-test.json'), JSON.stringify({ after: win.getBounds(), expect: defaultPosition(SIZES[settings.size]) })); app.quit(); }, 6000);
+  }
 
   try {
     const img = nativeImage.createFromPath(path.join(__dirname, 'assets', 'icon.png')).resize({ width: 16, height: 16 });
@@ -194,6 +237,7 @@ app.whenReady().then(() => {
     tray.setContextMenu(Menu.buildFromTemplate([
       { label: '트리 보이기/숨기기', click: () => { if (win) { win.isVisible() ? win.hide() : win.showInactive(); } } },
       { label: '소원 달기', click: () => { if (win) { win.showInactive(); win.webContents.send('cmd', 'wish'); } } },
+      { label: '위치 초기화', click: () => resetPosition() },
       { type: 'separator' },
       { label: '종료', click: () => app.quit() },
     ]));
